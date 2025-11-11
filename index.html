@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zimbabwe USD Tax Calculator 2025 - Hourly Rate</title>
+    <style>
+        :root {
+            --primary: #009739; /* Zimbabwe flag green */
+            --primary-dark: #007a2f;
+            --secondary: #ce1126; /* Zimbabwe flag red */
+            --accent: #fcd116; /* Zimbabwe flag yellow */
+            --accent-dark: #e6b800;
+            --light: #f8f9fa;
+            --dark: #000000; /* Zimbabwe flag black */
+            --gray: #6c757d;
+            --border: #dee2e6;
+            --success: #28a745;
+            --info: #17a2b8;
+            --warning: #ffc107;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--accent);
+        }
+        
+        .header-content {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            color: var(--accent);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Calculator Card */
+        .calculator-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 2rem;
+            height: fit-content;
+            border-top: 4px solid var(--primary);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title i {
+            color: var(--secondary);
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .currency-symbol {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 12px 12px 30px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 151, 57, 0.1);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .checkbox {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        .checkbox-label {
+            font-weight: normal;
+            margin-bottom: 0;
+        }
+        
+        .section-divider {
+            border: none;
+            border-top: 2px solid var(--border);
+            margin: 1.5rem 0;
+        }
+        
+        .sub-section {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .sub-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        /* Button Styles */
+        .calculate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .calculate-btn:hover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+        
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Results Section */
+        .results-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 2rem;
+            border-top: 4px solid var(--secondary);
+        }
+        
+        .results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        
+        .results-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .results-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--success);
+            text-align: right;
+        }
+        
+        .results-grid {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 6px;
+            border-left: 4px solid var(--primary);
+            transition: transform 0.2s;
+        }
+        
+        .result-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .result-label {
+            font-weight: 500;
+        }
+        
+        .result-value {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .result-item.total {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+        
+        .result-item.total .result-value {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .result-item.info {
+            border-left-color: var(--info);
+        }
+        
+        .result-item.warning {
+            border-left-color: var(--accent);
+        }
+        
+        .result-item.medical {
+            border-left-color: #17a2b8;
+        }
+        
+        /* Tax Breakdown */
+        .breakdown-section {
+            margin-top: 2rem;
+        }
+        
+        .breakdown-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tax-brackets {
+            background: var(--light);
+            border-radius: 6px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+        }
+        
+        .bracket {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .bracket:last-child {
+            border-bottom: none;
+        }
+        
+        .bracket-range {
+            font-weight: 500;
+        }
+        
+        .bracket-rate {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark) 0%, #333 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            text-align: center;
+        }
+        
+        .disclaimer {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto 1rem;
+        }
+        
+        .copyright {
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+        
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mt-2 {
+            margin-top: 2rem;
+        }
+        
+        .mb-2 {
+            margin-bottom: 2rem;
+        }
+        
+        .note {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+        
+        .highlight {
+            background-color: rgba(252, 209, 22, 0.2);
+            padding: 0.5rem;
+            border-radius: 4px;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .flag-colors {
+            display: flex;
+            height: 5px;
+            margin-top: 10px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .flag-green {
+            flex: 1;
+            background: var(--primary);
+        }
+        
+        .flag-yellow {
+            flex: 1;
+            background: var(--accent);
+        }
+        
+        .flag-red {
+            flex: 1;
+            background: var(--secondary);
+        }
+        
+        .flag-black {
+            flex: 1;
+            background: var(--dark);
+        }
+        
+        .medical-info {
+            background-color: rgba(23, 162, 184, 0.1);
+            border-left: 4px solid #17a2b8;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        
+        .hourly-info {
+            background-color: rgba(40, 167, 69, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        
+        .toggle-container {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        
+        .toggle-option {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background: var(--light);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .toggle-option.active {
+            background: var(--primary);
+            color: white;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-calculator logo-icon"></i>
+                    Zimbabwe Tax Calculator 2025
+                </div>
+                <p class="tagline">Calculate your PAYE, NSSA, and AIDS Levy based on official ZIMRA tax tables</p>
+                <div class="flag-colors">
+                    <div class="flag-green"></div>
+                    <div class="flag-yellow"></div>
+                    <div class="flag-red"></div>
+                    <div class="flag-black"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="main-content">
+            <!-- Calculator Input Section -->
+            <div class="calculator-card">
+                <h2 class="card-title">
+                    <i class="fas fa-edit"></i>
+                    Enter Your Details
+                </h2>
+                
+                <div class="toggle-container">
+                    <div class="toggle-option active" id="toggleMonthly">Monthly Salary</div>
+                    <div class="toggle-option" id="toggleHourly">Hourly Calculation</div>
+                </div>
+                
+                <!-- Monthly Salary Section -->
+                <div id="monthlySection">
+                    <div class="form-group">
+                        <label class="form-label">Monthly Salary (USD)</label>
+                        <div class="input-group">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="monthlySalary" class="form-input" placeholder="Enter your monthly salary" min="0" step="0.01" value="1000">
+                        </div>
+                    </div>
+                    
+                    <!-- Allowances -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">Allowances (Taxable)</h3>
+                        <div class="form-group">
+                            <label class="form-label">Housing Allowance</label>
+                            <div class="input-group">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" id="housingAllowance" class="form-input" placeholder="Housing allowance" min="0" step="0.01" value="0">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Transport Allowance</label>
+                            <div class="input-group">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" id="transportAllowance" class="form-input" placeholder="Transport allowance" min="0" step="0.01" value="0">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Other Allowances</label>
+                            <div class="input-group">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" id="otherAllowances" class="form-input" placeholder="Other allowances" min="0" step="0.01" value="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hourly Calculation Section -->
+                <div id="hourlySection" class="hidden">
+                    <div class="hourly-info">
+                        <p><strong>Hourly Rate Calculation:</strong> Enter your monthly salary and hours worked to calculate your gross pay</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Monthly Salary (USD)</label>
+                        <div class="input-group">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="hourlyMonthlySalary" class="form-input" placeholder="Enter your monthly salary" min="0" step="0.01" value="1000">
+                        </div>
+                        <p class="note">Your full monthly salary for standard hours</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Standard Hours per Month</label>
+                        <div class="input-group">
+                            <input type="number" id="standardHours" class="form-input" value="176" min="0" step="1">
+                        </div>
+                        <p class="note">Typically 176 hours (22 days × 8 hours)</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Hours Worked This Month</label>
+                        <div class="input-group">
+                            <input type="number" id="hoursWorked" class="form-input" placeholder="Enter hours worked" min="0" step="0.1" value="120">
+                        </div>
+                        <p class="note">Actual hours worked this month</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Calculated Hourly Rate</label>
+                        <div class="input-group">
+                            <span class="currency-symbol">$</span>
+                            <input type="text" id="hourlyRate" class="form-input" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Calculated Basic Pay</label>
+                        <div class="input-group">
+                            <span class="currency-symbol">$</span>
+                            <input type="text" id="calculatedBasic" class="form-input" readonly>
+                        </div>
+                    </div>
+                    
+                    <!-- Allowances for Hourly Section -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">Allowances (Taxable)</h3>
+                        <div class="form-group">
+                            <label class="form-label">Housing Allowance</label>
+                            <div class="input-group">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" id="hourlyHousingAllowance" class="form-input" placeholder="Housing allowance" min="0" step="0.01" value="0">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Transport Allowance</label>
+                            <div class="input-group">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" id="hourlyTransportAllowance" class="form-input" placeholder="Transport allowance" min="0" step="0.01" value="0">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Other Allowances</label>
+                            <div class="input-group">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" id="hourlyOtherAllowances" class="form-input" placeholder="Other allowances" min="0" step="0.01" value="0">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Total Calculated Gross Pay</label>
+                        <div class="input-group">
+                            <span class="currency-symbol">$</span>
+                            <input type="text" id="calculatedGross" class="form-input" readonly>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Fringe Benefits -->
+                <div class="sub-section">
+                    <h3 class="sub-title">Fringe Benefits (Taxable but not paid in cash)</h3>
+                    <div class="form-group">
+                        <label class="form-label">Company Car Value</label>
+                        <div class="input-group">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="companyCar" class="form-input" placeholder="Company car value" min="0" step="0.01" value="0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Housing Benefit</label>
+                        <div class="input-group">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="housingBenefit" class="form-input" placeholder="Housing benefit" min="0" step="0.01" value="0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Other Fringe Benefits</label>
+                        <div class="input-group">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="otherFringeBenefits" class="form-input" placeholder="Other benefits" min="0" step="0.01" value="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pension Deductions (Allowable) -->
+                <div class="sub-section">
+                    <h3 class="sub-title">Pension Deductions (Allowable up to $450/month)</h3>
+                    <div class="highlight">
+                        <p><strong>Note:</strong> NSSA and other pension deductions are subtracted from gross income to calculate taxable income.</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Other Pension Deductions</label>
+                        <div class="input-group">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="otherPension" class="form-input" placeholder="Other pension deductions" min="0" step="0.01" value="0">
+                        </div>
+                        <p class="note">NSSA is automatically calculated at 4.5% of basic pay + allowances (capped at $700)</p>
+                    </div>
+                </div>
+                
+                <!-- Medical and Tax Credits -->
+                <div class="sub-section">
+                    <h3 class="sub-title">Medical & Tax Credits</h3>
+                    
+                    <div class="medical-info">
+                        <p><strong>Medical Aid Tax Credit:</strong> $1 credit for every $2 spent on medical aid for direct dependants (employee, spouse, and children)</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Medical Aid for Family (Direct Dependants)</label>
+                        <div class="input-group">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="familyMedicalAid" class="form-input" placeholder="Medical aid for family" min="0" step="0.01" value="0">
+                        </div>
+                        <p class="note">Employee, spouse, and children (biological or adopted)</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Medical Aid for Other Dependents</label>
+                        <div class="input-group">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="otherMedicalAid" class="form-input" placeholder="Medical aid for others" min="0" step="0.01" value="0">
+                        </div>
+                        <p class="note">Extended family members or other dependents</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Other Medical Expenses</label>
+                        <div class="input-group">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="medicalExpenses" class="form-input" placeholder="Other medical expenses" min="0" step="0.01" value="0">
+                        </div>
+                        <p class="note">$1 tax credit for every $2 spent (up to 1/3 of taxable income)</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Special Tax Credits</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="blindCredit" class="checkbox">
+                            <label for="blindCredit" class="checkbox-label">Blind ($900 annual credit)</label>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="disabledCredit" class="checkbox">
+                            <label for="disabledCredit" class="checkbox-label">Disabled ($900 annual credit)</label>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="seniorCredit" class="checkbox">
+                            <label for="seniorCredit" class="checkbox-label">Age 65+ ($900 annual credit)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="calculateBtn" class="calculate-btn">
+                    <i class="fas fa-calculator"></i>
+                    Calculate Tax
+                </button>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-card">
+                <div class="results-header">
+                    <h2 class="results-title">
+                        <i class="fas fa-chart-pie"></i>
+                        Tax Breakdown
+                    </h2>
+                    <div class="results-amount" id="netIncomeDisplay">$0.00</div>
+                </div>
+                
+                <div class="results-grid">
+                    <div class="result-item">
+                        <span class="result-label">Gross Income</span>
+                        <span class="result-value" id="grossIncome">$0.00</span>
+                    </div>
+                    
+                    <div class="result-item info">
+                        <span class="result-label">NSSA Contribution (4.5%)</span>
+                        <span class="result-value" id="nssaAmount">$0.00</span>
+                    </div>
+                    
+                    <div class="result-item info">
+                        <span class="result-label">Other Pension Deductions</span>
+                        <span class="result-value" id="otherPensionAmount">$0.00</span>
+                    </div>
+                    
+                    <div class="result-item info">
+                        <span class="result-label">Total Allowable Deductions</span>
+                        <span class="result-value" id="totalAllowableDeductions">$0.00</span>
+                    </div>
+                    
+                    <div class="result-item total">
+                        <span class="result-label">Taxable Income</span>
+                        <span class="result-value" id="taxableIncome">$0.00</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">PAYE (Income Tax)</span>
+                        <span class="result-value" id="payeTax">$0.00</span>
+                    </div>
+                    
+                    <div class="result-item medical">
+                        <span class="result-label">Medical Aid Tax Credit</span>
+                        <span class="result-value" id="medicalCredit">$0.00</span>
+                    </div>
+                    
+                    <div class="result-item info">
+                        <span class="result-label">Special Tax Credits</span>
+                        <span class="result-value" id="specialCredits">$0.00</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">PAYE After Credits</span>
+                        <span class="result-value" id="payeAfterCredits">$0.00</span>
+                    </div>
+                    
+                    <div class="result-item warning">
+                        <span class="result-label">AIDS Levy (3% of PAYE)</span>
+                        <span class="result-value" id="aidsLevy">$0.00</span>
+                    </div>
+                    
+                    <div class="result-item medical">
+                        <span class="result-label">Medical Aid Contributions</span>
+                        <span class="result-value" id="totalMedicalAid">$0.00</span>
+                    </div>
+                    
+                    <div class="result-item total">
+                        <span class="result-label">Total Deductions</span>
+                        <span class="result-value" id="totalDeductions">$0.00</span>
+                    </div>
+                    
+                    <div class="result-item total">
+                        <span class="result-label">Net Cash Income</span>
+                        <span class="result-value" id="netCashIncome">$0.00</span>
+                    </div>
+                    
+                    <div class="result-item total">
+                        <span class="result-label">Net Monthly Income</span>
+                        <span class="result-value" id="netMonthly">$0.00</span>
+                    </div>
+                </div>
+                
+                <!-- Tax Brackets Section -->
+                <div class="breakdown-section">
+                    <h3 class="breakdown-title">
+                        <i class="fas fa-layer-group"></i>
+                        2025 Zimbabwe Monthly Tax Brackets
+                    </h3>
+                    <div class="tax-brackets" id="taxBrackets">
+                        <!-- Tax brackets will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p class="disclaimer">
+                    Disclaimer: This calculator provides estimates based on the 2025 Zimbabwe tax regulations from ZIMRA. 
+                    Actual tax liability may vary based on individual circumstances and specific tax laws.
+                    Fringe benefits are included in taxable income but not paid in cash.
+                </p>
+                <p class="copyright">
+                    &copy; 2025 Zimbabwe Tax Calculator. For official tax advice, consult ZIMRA or a qualified tax professional.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Zimbabwe 2025 Monthly Tax Brackets (from official ZIMRA tables)
+        const MONTHLY_TAX_BRACKETS = [
+            { min: 0, max: 100, rate: 0, deduction: 0 },
+            { min: 100.01, max: 300, rate: 0.20, deduction: 20 },
+            { min: 300.01, max: 1000, rate: 0.25, deduction: 35 },
+            { min: 1000.01, max: 2000, rate: 0.30, deduction: 85 },
+            { min: 2000.01, max: 3000, rate: 0.35, deduction: 185 },
+            { min: 3000.01, max: Infinity, rate: 0.40, deduction: 355 } // Calculated for continuity
+        ];
+
+        // Constants
+        const NSSA_RATE = 0.045; // 4.5% NSSA contribution
+        const NSSA_CAP = 700; // Maximum pensionable income for NSSA per month
+        const PENSION_DEDUCTION_CAP = 450; // Maximum allowable pension deductions per month
+        const AIDS_LEVY_RATE = 0.03; // 3% AIDS Levy
+        const SPECIAL_CREDIT_AMOUNT = 900; // $900 annual credit for special categories
+        const MEDICAL_CREDIT_RATE = 0.5; // $1 credit for every $2 spent
+
+        // DOM Elements
+        const calculateBtn = document.getElementById('calculateBtn');
+        const toggleMonthly = document.getElementById('toggleMonthly');
+        const toggleHourly = document.getElementById('toggleHourly');
+        const monthlySection = document.getElementById('monthlySection');
+        const hourlySection = document.getElementById('hourlySection');
+        
+        // Monthly inputs
+        const monthlySalaryInput = document.getElementById('monthlySalary');
+        const housingAllowanceInput = document.getElementById('housingAllowance');
+        const transportAllowanceInput = document.getElementById('transportAllowance');
+        const otherAllowancesInput = document.getElementById('otherAllowances');
+        
+        // Hourly inputs
+        const hourlyMonthlySalaryInput = document.getElementById('hourlyMonthlySalary');
+        const standardHoursInput = document.getElementById('standardHours');
+        const hoursWorkedInput = document.getElementById('hoursWorked');
+        const hourlyRateInput = document.getElementById('hourlyRate');
+        const calculatedBasicInput = document.getElementById('calculatedBasic');
+        const calculatedGrossInput = document.getElementById('calculatedGross');
+        
+        // Hourly allowances
+        const hourlyHousingAllowanceInput = document.getElementById('hourlyHousingAllowance');
+        const hourlyTransportAllowanceInput = document.getElementById('hourlyTransportAllowance');
+        const hourlyOtherAllowancesInput = document.getElementById('hourlyOtherAllowances');
+
+        // Result Elements
+        const grossIncomeEl = document.getElementById('grossIncome');
+        const nssaAmountEl = document.getElementById('nssaAmount');
+        const otherPensionAmountEl = document.getElementById('otherPensionAmount');
+        const totalAllowableDeductionsEl = document.getElementById('totalAllowableDeductions');
+        const taxableIncomeEl = document.getElementById('taxableIncome');
+        const payeTaxEl = document.getElementById('payeTax');
+        const medicalCreditEl = document.getElementById('medicalCredit');
+        const specialCreditsEl = document.getElementById('specialCredits');
+        const payeAfterCreditsEl = document.getElementById('payeAfterCredits');
+        const aidsLevyEl = document.getElementById('aidsLevy');
+        const totalMedicalAidEl = document.getElementById('totalMedicalAid');
+        const totalDeductionsEl = document.getElementById('totalDeductions');
+        const netCashIncomeEl = document.getElementById('netCashIncome');
+        const netMonthlyEl = document.getElementById('netMonthly');
+        const netIncomeDisplayEl = document.getElementById('netIncomeDisplay');
+        const taxBracketsEl = document.getElementById('taxBrackets');
+
+        // Toggle between monthly and hourly
+        toggleMonthly.addEventListener('click', function() {
+            toggleMonthly.classList.add('active');
+            toggleHourly.classList.remove('active');
+            monthlySection.classList.remove('hidden');
+            hourlySection.classList.add('hidden');
+        });
+
+        toggleHourly.addEventListener('click', function() {
+            toggleHourly.classList.add('active');
+            toggleMonthly.classList.remove('active');
+            hourlySection.classList.remove('hidden');
+            monthlySection.classList.add('hidden');
+            calculateHourlyRate();
+        });
+
+        // Calculate hourly rate when inputs change
+        hourlyMonthlySalaryInput.addEventListener('input', calculateHourlyRate);
+        standardHoursInput.addEventListener('input', calculateHourlyRate);
+        hoursWorkedInput.addEventListener('input', calculateHourlyRate);
+        hourlyHousingAllowanceInput.addEventListener('input', calculateHourlyRate);
+        hourlyTransportAllowanceInput.addEventListener('input', calculateHourlyRate);
+        hourlyOtherAllowancesInput.addEventListener('input', calculateHourlyRate);
+
+        function calculateHourlyRate() {
+            const monthlySalary = parseFloat(hourlyMonthlySalaryInput.value) || 0;
+            const standardHours = parseFloat(standardHoursInput.value) || 176;
+            const hoursWorked = parseFloat(hoursWorkedInput.value) || 0;
+            const housingAllowance = parseFloat(hourlyHousingAllowanceInput.value) || 0;
+            const transportAllowance = parseFloat(hourlyTransportAllowanceInput.value) || 0;
+            const otherAllowances = parseFloat(hourlyOtherAllowancesInput.value) || 0;
+            
+            if (monthlySalary > 0 && standardHours > 0) {
+                const hourlyRate = monthlySalary / standardHours;
+                const calculatedBasic = hourlyRate * hoursWorked;
+                const totalAllowances = housingAllowance + transportAllowance + otherAllowances;
+                const calculatedGross = calculatedBasic + totalAllowances;
+                
+                hourlyRateInput.value = hourlyRate.toFixed(2);
+                calculatedBasicInput.value = calculatedBasic.toFixed(2);
+                calculatedGrossInput.value = calculatedGross.toFixed(2);
+            } else {
+                hourlyRateInput.value = '';
+                calculatedBasicInput.value = '';
+                calculatedGrossInput.value = '';
+            }
+        }
+
+        // Initialize tax brackets display
+        function initializeTaxBrackets() {
+            taxBracketsEl.innerHTML = '';
+            MONTHLY_TAX_BRACKETS.forEach(bracket => {
+                const bracketEl = document.createElement('div');
+                bracketEl.className = 'bracket';
+                
+                const range = bracket.max === Infinity 
+                    ? `Above $${bracket.min.toLocaleString()}`
+                    : `$${bracket.min.toLocaleString()} - $${bracket.max.toLocaleString()}`;
+                
+                const rate = `${(bracket.rate * 100)}%`;
+                
+                bracketEl.innerHTML = `
+                    <span class="bracket-range">${range}</span>
+                    <span class="bracket-rate">${rate}</span>
+                `;
+                
+                taxBracketsEl.appendChild(bracketEl);
+            });
+        }
+
+        // Calculate PAYE based on brackets
+        function calculatePAYE(monthlyIncome) {
+            for (const bracket of MONTHLY_TAX_BRACKETS) {
+                if (monthlyIncome >= bracket.min && monthlyIncome <= bracket.max) {
+                    return Math.max(0, (monthlyIncome * bracket.rate) - bracket.deduction);
+                }
+            }
+            return 0;
+        }
+
+        // Calculate NSSA contribution
+        function calculateNSSA(monthlyBasicPay, monthlyAllowances) {
+            const totalPensionable = monthlyBasicPay + monthlyAllowances;
+            const taxableAmount = Math.min(totalPensionable, NSSA_CAP);
+            return taxableAmount * NSSA_RATE;
+        }
+
+        // Calculate allowable pension deductions
+        function calculateAllowablePensionDeductions(nssaContribution, otherPension) {
+            const totalPension = nssaContribution + otherPension;
+            return Math.min(totalPension, PENSION_DEDUCTION_CAP);
+        }
+
+        // Calculate medical tax credit (only for family medical aid)
+        function calculateMedicalCredit(familyMedicalAid, otherMedicalAid, medicalExpenses, taxableIncome) {
+            // Only family medical aid (direct dependants) qualifies for tax credit
+            const eligibleMedical = familyMedicalAid + medicalExpenses;
+            const creditAmount = eligibleMedical * MEDICAL_CREDIT_RATE;
+            const maxAllowed = taxableIncome / 3; // Maximum credit is 1/3 of taxable income
+            return Math.min(creditAmount, maxAllowed);
+        }
+
+        // Calculate special tax credits
+        function calculateSpecialCredits(isBlind, isDisabled, isSenior, isMonthly) {
+            let credits = 0;
+            if (isBlind) credits += SPECIAL_CREDIT_AMOUNT;
+            if (isDisabled) credits += SPECIAL_CREDIT_AMOUNT;
+            if (isSenior) credits += SPECIAL_CREDIT_AMOUNT;
+            
+            return isMonthly ? credits / 12 : credits;
+        }
+
+        // Format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2
+            }).format(amount);
+        }
+
+        // Main calculation function
+        function calculateTax() {
+            const isHourly = toggleHourly.classList.contains('active');
+            
+            // Get common inputs
+            const companyCar = parseFloat(document.getElementById('companyCar').value) || 0;
+            const housingBenefit = parseFloat(document.getElementById('housingBenefit').value) || 0;
+            const otherFringeBenefits = parseFloat(document.getElementById('otherFringeBenefits').value) || 0;
+            const otherPension = parseFloat(document.getElementById('otherPension').value) || 0;
+            const familyMedicalAid = parseFloat(document.getElementById('familyMedicalAid').value) || 0;
+            const otherMedicalAid = parseFloat(document.getElementById('otherMedicalAid').value) || 0;
+            const medicalExpenses = parseFloat(document.getElementById('medicalExpenses').value) || 0;
+            
+            const isBlind = document.getElementById('blindCredit').checked;
+            const isDisabled = document.getElementById('disabledCredit').checked;
+            const isSenior = document.getElementById('seniorCredit').checked;
+
+            let monthlyBasicPay, monthlyHousingAllowance, monthlyTransportAllowance, monthlyOtherAllowances;
+
+            if (isHourly) {
+                // Use calculated values from hourly inputs
+                monthlyBasicPay = parseFloat(calculatedBasicInput.value) || 0;
+                monthlyHousingAllowance = parseFloat(hourlyHousingAllowanceInput.value) || 0;
+                monthlyTransportAllowance = parseFloat(hourlyTransportAllowanceInput.value) || 0;
+                monthlyOtherAllowances = parseFloat(hourlyOtherAllowancesInput.value) || 0;
+            } else {
+                // Use direct monthly inputs
+                monthlyBasicPay = parseFloat(monthlySalaryInput.value) || 0;
+                monthlyHousingAllowance = parseFloat(housingAllowanceInput.value) || 0;
+                monthlyTransportAllowance = parseFloat(transportAllowanceInput.value) || 0;
+                monthlyOtherAllowances = parseFloat(otherAllowancesInput.value) || 0;
+            }
+
+            // Calculate totals
+            const monthlyTotalAllowances = monthlyHousingAllowance + monthlyTransportAllowance + monthlyOtherAllowances;
+            const monthlyTotalFringeBenefits = companyCar + housingBenefit + otherFringeBenefits;
+            const monthlyGrossIncome = monthlyBasicPay + monthlyTotalAllowances + monthlyTotalFringeBenefits;
+            
+            // Calculate NSSA and allowable deductions
+            const monthlyNSSA = calculateNSSA(monthlyBasicPay, monthlyTotalAllowances);
+            const monthlyAllowablePensionDeductions = calculateAllowablePensionDeductions(monthlyNSSA, otherPension);
+            
+            // Calculate taxable income (after allowable deductions)
+            const monthlyTaxableIncome = Math.max(0, monthlyGrossIncome - monthlyAllowablePensionDeductions);
+            
+            // Calculate cash income (basic pay + allowances, excluding fringe benefits)
+            const monthlyCashIncome = monthlyBasicPay + monthlyTotalAllowances;
+
+            // Calculate PAYE and credits
+            const monthlyPAYE = calculatePAYE(monthlyTaxableIncome);
+            const monthlyMedicalCredit = calculateMedicalCredit(familyMedicalAid, otherMedicalAid, medicalExpenses, monthlyTaxableIncome);
+            const monthlySpecialCredits = calculateSpecialCredits(isBlind, isDisabled, isSenior, true);
+            const monthlyPAYEAfterCredits = Math.max(0, monthlyPAYE - monthlyMedicalCredit - monthlySpecialCredits);
+            const monthlyAidsLevy = monthlyPAYEAfterCredits * AIDS_LEVY_RATE;
+            
+            // Calculate total medical aid contributions (both family and other)
+            const monthlyTotalMedicalAid = familyMedicalAid + otherMedicalAid;
+            
+            // Calculate total deductions (PAYE, AIDS Levy, medical aid contributions, and pension contributions)
+            const monthlyTotalDeductions = monthlyPAYEAfterCredits + monthlyAidsLevy + monthlyTotalMedicalAid + monthlyNSSA + otherPension;
+            const monthlyNetCashIncome = monthlyCashIncome - monthlyTotalDeductions;
+
+            // Update UI
+            grossIncomeEl.textContent = formatCurrency(monthlyGrossIncome);
+            nssaAmountEl.textContent = formatCurrency(monthlyNSSA);
+            otherPensionAmountEl.textContent = formatCurrency(otherPension);
+            totalAllowableDeductionsEl.textContent = formatCurrency(monthlyAllowablePensionDeductions);
+            taxableIncomeEl.textContent = formatCurrency(monthlyTaxableIncome);
+            payeTaxEl.textContent = formatCurrency(monthlyPAYE);
+            medicalCreditEl.textContent = formatCurrency(monthlyMedicalCredit);
+            specialCreditsEl.textContent = formatCurrency(monthlySpecialCredits);
+            payeAfterCreditsEl.textContent = formatCurrency(monthlyPAYEAfterCredits);
+            aidsLevyEl.textContent = formatCurrency(monthlyAidsLevy);
+            totalMedicalAidEl.textContent = formatCurrency(monthlyTotalMedicalAid);
+            totalDeductionsEl.textContent = formatCurrency(monthlyTotalDeductions);
+            netCashIncomeEl.textContent = formatCurrency(monthlyNetCashIncome);
+            netMonthlyEl.textContent = formatCurrency(monthlyNetCashIncome);
+            netIncomeDisplayEl.textContent = formatCurrency(monthlyNetCashIncome);
+        }
+
+        // Event Listeners
+        calculateBtn.addEventListener('click', calculateTax);
+        
+        // Initialize the page
+        initializeTaxBrackets();
+        calculateHourlyRate();
+        
+        // Add sample calculation on load
+        window.addEventListener('load', function() {
+            calculateTax();
+        });
+    </script>
+</body>
+</html>
